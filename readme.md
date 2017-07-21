@@ -10,7 +10,10 @@ var reload = require('express-reload')
 var app = express()
 
 // path to reload
-var path = __dirname + '/project'
+// important should end with "/" if index.js
+var path = __dirname + '/project/'
+// or like this for a non index.js name
+var path = __dirname + '/project/server.js'
 
 app.use(reload(path))
 
