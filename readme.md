@@ -2,6 +2,14 @@
 
 Automaticly reload your express.js server without bringing down the server. This is really useful because it will hot reload instead of waiting for the whole node.js process to restart.
 
+## Install
+
+```
+npm install express-reload --save-dev
+```
+
+Find it on https://www.npmjs.com/package/express-reload
+
 ## Example
 
 ```js
