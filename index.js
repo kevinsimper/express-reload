@@ -7,7 +7,7 @@ module.exports = function(folder) {
   let rootFolder = folder
   if(folder.charAt(folder.length - path.sep.length) !== path.sep) {
     debug('Testing if the folder is a folder')
-    rootFolder = path.dirname(folder)
+    rootFolder = path.dirname(folder).replace(new RegExp('\\' + path.sep, 'g'), '/')
   }
   var watcher = chokidar.watch(rootFolder)
   var re = new RegExp(rootFolder)
@@ -16,7 +16,7 @@ module.exports = function(folder) {
     watcher.on('all', function() {
       console.log('Clearing ' + rootFolder + ' module cache from server')
       Object.keys(require.cache).forEach(function(id) {
-        if (re.test(id)) {
+        if (re.test(id.replace(new RegExp('\\' + path.sep, 'g'), '/'))) {
           debug('deleting cache key')
           delete require.cache[id]
         }
