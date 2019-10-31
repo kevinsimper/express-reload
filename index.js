@@ -2,7 +2,7 @@ var chokidar = require('chokidar')
 var debug = require('debug')('express-reload')
 var path = require('path')
 
-module.exports = function(folder) {
+module.exports = function(folder, key) {
   debug('Folder to require and watch', folder)
   let rootFolder = folder
   if(folder.charAt(folder.length - path.sep.length) !== path.sep) {
@@ -26,6 +26,10 @@ module.exports = function(folder) {
   require(folder)
   return function(req, res, next) {
     debug('require hot reload')
-    require(folder)(req, res, next)
+    if (key) {
+      require(folder)[key](req, res, next)
+    } else {
+      require(folder)(req, res, next)
+    }
   }
 }
