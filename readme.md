@@ -23,7 +23,11 @@ var path = __dirname + '/project/'
 // or like this for a non index.js name
 var path = __dirname + '/project/server.js'
 
+// default export is the router
 app.use(reload(path))
+
+// or optional exported router by name
+app.use(reload(path, 'router')); // module.exports = { router, otherFn };       
 
 app.listen(9000, () => console.log('Listening on 9000'))
 
