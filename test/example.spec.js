@@ -2,7 +2,9 @@ const { createSandbox } = require('sinon');
 const supertest = require('supertest');
 const spawn = require('child_process').spawn;
 
-const cmd = (arr, cwd = '/app') => {
+const dir = __dirname;
+
+const cmd = (arr, cwd = __dirname) => {
   // console.log('exec => ', arr.join(' '));
 
   const c0 = arr.shift();
@@ -41,8 +43,8 @@ describe('*** running test ***', () => {
 
     // start server
     Promise.all([
-      cmd([`${__dirname}/script.sh`, 'revert', '/test/example/main/notindex.js']),
-      cmd([`${__dirname}/script.sh`, 'revert', '/test/example/project/index.js'])
+      cmd([`${dir}/script.sh`, 'revert', `${dir}/example/main/notindex.js`]),
+      cmd([`${dir}/script.sh`, 'revert', `${dir}/example/project/index.js`])
     ]).then(() => {
       server = require('./example/index');
       ss = supertest('http://localhost:9000');
@@ -70,10 +72,10 @@ describe('*** running test ***', () => {
 
     ss.get('/').expect(200)
       .expect((res) => assert.match(res.text, 'Hello World Not called index.js 1'))
-      .then(() => cmd([`${__dirname}/script.sh`, 'change', '/test/example/main/notindex.js']))
+      .then(() => cmd([`${dir}/script.sh`, 'change', `${dir}/example/main/notindex.js`]))
       .then(() => sleep(200))
       .then(() => ss.get('/').expect(200).expect((res) => assert.match(res.text, 'Hello World Not called index.js 2')))
-      .then(() => cmd([`${__dirname}/script.sh`, 'revert', '/test/example/main/notindex.js']))
+      .then(() => cmd([`${dir}/script.sh`, 'revert', `${dir}/example/main/notindex.js`]))
       .then(() => sleep(200))
       .then(() => ss.get('/').expect(200).expect((res) => assert.match(res.text, 'Hello World Not called index.js 1')))
       .then(() => done());
@@ -84,10 +86,10 @@ describe('*** running test ***', () => {
 
     ss.get('/project').expect(200)
       .expect((res) => assert.match(res.text, 'Hello World reloader 1'))
-      .then(() => cmd([`${__dirname}/script.sh`, 'change', '/test/example/project/index.js']))
+      .then(() => cmd([`${dir}/script.sh`, 'change', `${dir}/example/project/index.js`]))
       .then(() => sleep(200))
       .then(() => ss.get('/project').expect(200).expect((res) => assert.match(res.text, 'Hello World reloader 2')))
-      .then(() => cmd([`${__dirname}/script.sh`, 'revert', '/test/example/project/index.js']))
+      .then(() => cmd([`${dir}/script.sh`, 'revert', `${dir}/example/project/index.js`]))
       .then(() => sleep(200))
       .then(() => ss.get('/project').expect(200).expect((res) => assert.match(res.text, 'Hello World reloader 1')))
       .then(() => done());
