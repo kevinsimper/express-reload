@@ -34,7 +34,10 @@ describe('*** running test ***', () => {
   let server;
   let ss;
 
-  before((done) => {
+  before(function (done) {
+
+    // // runs before each test in this block
+    this.timeout(60 * 1000);
 
     // start server
     Promise.all([
@@ -45,6 +48,8 @@ describe('*** running test ***', () => {
       ss = supertest('http://localhost:9000');
       done();
     })
+
+
 
   });
 
