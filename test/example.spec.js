@@ -48,7 +48,7 @@ describe('*** running test ***', () => {
     ]).then(() => {
       server = require('./example/index');
       ss = supertest('http://localhost:9000');
-      done();
+      sleep(400).then(()=> done());
     })
 
 
