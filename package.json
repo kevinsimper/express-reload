@@ -2,14 +2,14 @@
   "name": "express-reload",
   "version": "1.2.0",
   "description": "Automatic hot reload express.js server",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --exit",
+    "test:watch": "mocha --watch"
   },
   "keywords": [
     "reload",
     "nodemon",
-    "express",
     "express"
   ],
   "author": "",
@@ -17,5 +17,11 @@
   "dependencies": {
     "chokidar": "^1.7.0",
     "debug": "^2.6.8"
+  },
+  "devDependencies": {
+    "express": "^4.17.1",
+    "mocha": "^8.1.1",
+    "sinon": "^9.0.2",
+    "supertest": "^4.0.2"
   }
 }
