@@ -16,6 +16,6 @@
   "license": "MIT",
   "dependencies": {
     "chokidar": "^1.7.0",
-    "debug": "^2.6.8"
+    "debug": "^3.1.0"
   }
 }
